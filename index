@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symphonie Visuelle Quantique</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+```
+    body {
+        background: radial-gradient(circle at 30% 70%, #ff006e, #8338ec, #3a86ff, #06ffa5);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+        cursor: none;
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    canvas {
+        display: block;
+        mix-blend-mode: screen;
+    }
+    
+    .ui {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 100;
+    }
+    
+    .controls {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 25px;
+        pointer-events: all;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    .controls h2 {
+        color: white;
+        font-size: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+    
+    .control-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    button {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.6s;
+    }
+    
+    button:hover::before {
+        left: 100%;
+    }
+    
+    button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .cursor {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid white;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1000;
+        mix-blend-mode: difference;
+        transition: transform 0.1s ease;
+    }
+    
+    .cursor::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .info {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 20px;
+        color: white;
+        font-size: 14px;
+        max-width: 350px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        pointer-events: all;
+    }
+    
+    .info strong {
+        font-size: 16px;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    
+    @media (max-width: 768px) {
+        .control-grid { grid-template-columns: 1fr; }
+        .controls, .info { position: relative; margin: 20px; }
+    }
+</style>
+```
+
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+```
+<div class="ui">
+    <div class="cursor" id="cursor"></div>
+    
+    <div class="controls">
+        <h2>SYMPHONIE QUANTIQUE</h2>
+        <div class="control-grid">
+            <button onclick="neuralStorm()">🧠 Tempête Neurale</button>
+            <button onclick="cosmicDNA()">🧬 ADN Cosmique</button>
+            <button onclick="quantumField()">⚛️ Champ Quantique</button>
+            <button onclick="dimensionalRift()">🌌 Faille Dimensionnelle</button>
+            <button onclick="fluidDynamics()">🌊 Dynamique Fluide</button>
+            <button onclick="plasmaBurst()">⚡ Explosion Plasma</button>
+            <button onclick="hyperspaceJump()">🚀 Saut Hyperespace</button>
+            <button onclick="morphogenesis()">🦋 Morphogenèse</button>
+        </div>
+    </div>
+    
+    <div class="info">
+        <strong>🎭 RÉVOLUTION VISUELLE</strong><br><br>
+        Chaque effet utilise des algorithmes de génération procédurale en temps réel.<br><br>
+        <em>Bougez votre souris pour interagir avec les particules !</em>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const cursor = document.getElementById('cursor');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    let animationId;
+    let time = 0;
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+    let particles = [];
+    
+    // Curseur personnalisé
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = (mouseX - 10) + 'px';
+        cursor.style.top = (mouseY - 10) + 'px';
+    });
+    
+    class Particle {
+        constructor(x, y, vx, vy, color, size, life) {
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.color = color;
+            this.size = size;
+            this.life = life;
+            this.maxLife = life;
+            this.gravity = 0;
+        }
+        
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += this.gravity;
+            this.life--;
+            
+            // Attraction vers la souris
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 200) {
+                this.vx += dx * 0.0002;
+                this.vy += dy * 0.0002;
+            }
+        }
+        
+        draw() {
+            const alpha = this.life / this.maxLife;
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+    }
+    
+    function neuralStorm() {
+        cancelAnimationFrame(animationId);
+        particles = [];
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Génération de nouvelles particules
+            for (let i = 0; i < 5; i++) {
+                particles.push(new Particle(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    (Math.random() - 0.5) * 2,
+                    (Math.random() - 0.5) * 2,
+                    `hsl(${200 + Math.sin(time * 0.01) * 60}, 80%, 60%)`,
+                    Math.random() * 3 + 1,
+                    60
+                ));
+            }
+            
+            // Connexions neurales
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(100, 200, 255, ${0.5 - distance / 200})`;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            particles = particles.filter(p => {
+                p.update();
+                p.draw();
+                return p.life > 0;
+            });
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function cosmicDNA() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            for (let i = 0; i < 100; i++) {
+                const angle = i * 0.1 + time * 0.02;
+                const radius1 = 100 + Math.sin(i * 0.2 + time * 0.01) * 50;
+                const radius2 = 100 + Math.cos(i * 0.2 + time * 0.01) * 50;
+                
+                const x1 = centerX + Math.cos(angle) * radius1;
+                const y1 = centerY + Math.sin(angle) * radius1 + i * 3;
+                const x2 = centerX + Math.cos(angle + Math.PI) * radius2;
+                const y2 = centerY + Math.sin(angle + Math.PI) * radius2 + i * 3;
+                
+                const hue1 = (i * 5 + time * 2) % 360;
+                const hue2 = (i * 5 + time * 2 + 180) % 360;
+                
+                ctx.fillStyle = `hsl(${hue1}, 90%, 60%)`;
+                ctx.beginPath();
+                ctx.arc(x1, y1 % canvas.height, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = `hsl(${hue2}, 90%, 60%)`;
+                ctx.beginPath();
+                ctx.arc(x2, y2 % canvas.height, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Connexions
+                if (i % 5 === 0) {
+                    ctx.strokeStyle = `hsla(${(hue1 + hue2) / 2}, 70%, 50%, 0.6)`;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1 % canvas.height);
+                    ctx.lineTo(x2, y2 % canvas.height);
+                    ctx.stroke();
+                }
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function quantumField() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            for (let x = 0; x < canvas.width; x += 20) {
+                for (let y = 0; y < canvas.height; y += 20) {
+                    const distance = Math.sqrt((x - mouseX) ** 2 + (y - mouseY) ** 2);
+                    const wave = Math.sin(distance * 0.02 - time * 0.1) * 50;
+                    const quantum = Math.cos(x * 0.01 + time * 0.05) * Math.sin(y * 0.01 + time * 0.03);
+                    
+                    const intensity = (wave + quantum * 100 + 100) / 200;
+                    const hue = (distance + time * 3) % 360;
+                    
+                    ctx.fillStyle = `hsla(${hue}, 80%, 60%, ${intensity})`;
+                    ctx.fillRect(x, y, 15, 15);
+                }
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function dimensionalRift() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2 + Math.sin(time * 0.01) * 100;
+            const centerY = canvas.height / 2 + Math.cos(time * 0.01) * 100;
+            
+            for (let r = 0; r < 300; r += 5) {
+                const segments = Math.floor(r / 5) + 8;
+                for (let i = 0; i < segments; i++) {
+                    const angle = (i / segments) * Math.PI * 2 + time * 0.02;
+                    const warp = Math.sin(r * 0.02 + time * 0.03) * 20;
+                    const x = centerX + Math.cos(angle) * (r + warp);
+                    const y = centerY + Math.sin(angle) * (r + warp);
+                    
+                    const hue = (r + time * 5) % 360;
+                    const size = Math.sin(r * 0.1 + time * 0.05) * 3 + 2;
+                    
+                    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function fluidDynamics() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            for (let x = 0; x < canvas.width; x += 8) {
+                for (let y = 0; y < canvas.height; y += 8) {
+                    const dx = x - mouseX;
+                    const dy = y - mouseY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    const flow = Math.atan2(dy, dx) + Math.sin(distance * 0.01 - time * 0.05);
+                    const intensity = Math.sin(distance * 0.02 + time * 0.03) * 0.5 + 0.5;
+                    
+                    const endX = x + Math.cos(flow) * 15;
+                    const endY = y + Math.sin(flow) * 15;
+                    
+                    const hue = (flow * 180 / Math.PI + time * 2) % 360;
+                    ctx.strokeStyle = `hsla(${hue}, 70%, 60%, ${intensity})`;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(endX, endY);
+                    ctx.stroke();
+                }
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function plasmaBurst() {
+        cancelAnimationFrame(animationId);
+        particles = [];
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Générer des éclairs de plasma
+            if (Math.random() < 0.3) {
+                const startX = Math.random() * canvas.width;
+                const startY = Math.random() * canvas.height;
+                
+                for (let i = 0; i < 20; i++) {
+                    particles.push(new Particle(
+                        startX,
+                        startY,
+                        (Math.random() - 0.5) * 20,
+                        (Math.random() - 0.5) * 20,
+                        `hsl(${Math.random() * 60 + 180}, 100%, 70%)`,
+                        Math.random() * 5 + 2,
+                        30
+                    ));
+                }
+            }
+            
+            // Dessiner les éclairs entre particules proches
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 80 && Math.random() < 0.1) {
+                        ctx.strokeStyle = `rgba(150, 200, 255, 0.8)`;
+                        ctx.lineWidth = Math.random() * 3 + 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            particles = particles.filter(p => {
+                p.update();
+                p.draw();
+                return p.life > 0 && p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height;
+            });
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function hyperspaceJump() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            for (let i = 0; i < 200; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.sin(time * 0.02 + i * 0.1) * 20 + 5;
+                const distance = (time * speed + i * 10) % (canvas.width);
+                
+                const x = centerX + Math.cos(angle) * distance;
+                const y = centerY + Math.sin(angle) * distance;
+                
+                if (distance > canvas.width * 0.8) continue;
+                
+                const hue = (angle * 180 / Math.PI + time * 3) % 360;
+                const length = speed * 2;
+                
+                ctx.strokeStyle = `hsl(${hue}, 100%, 70%)`;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x - Math.cos(angle) * length, y - Math.sin(angle) * length);
+                ctx.stroke();
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    function morphogenesis() {
+        cancelAnimationFrame(animationId);
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const segments = 8;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            for (let layer = 0; layer < 5; layer++) {
+                const baseRadius = 50 + layer * 40;
+                const points = [];
+                
+                for (let i = 0; i <= segments; i++) {
+                    const angle = (i / segments) * Math.PI * 2 + time * 0.01 * (layer + 1);
+                    const radius = baseRadius + Math.sin(angle * 3 + time * 0.02) * 20;
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    points.push({ x, y });
+                }
+                
+                const hue = (layer * 60 + time * 2) % 360;
+                ctx.strokeStyle = `hsl(${hue}, 80%, 60%)`;
+                ctx.fillStyle = `hsla(${hue}, 60%, 40%, 0.1)`;
+                ctx.lineWidth = 3;
+                
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                
+                for (let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+            
+            time++;
+            animationId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    
+    // Redimensionnement
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
+    // Démarrage automatique
+    neuralStorm();
+</script>
+```
+
+</body>
+</html>
